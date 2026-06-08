@@ -529,28 +529,55 @@ ${paper.content}
             }, 3000);
         }
 
-        // GitHub repo mein ye final code lagayein
         window.onload = async () => {
-            // Apne Google Web App ka URL yahan paste karein
+            const container = document.getElementById('papersContainer');
+            container.innerHTML = `
+        <div class="flex flex-col items-center justify-center py-16 space-y-4">
+            <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-xs font-black text-blue-600 uppercase tracking-widest animate-pulse">
+                Please Wait Loading...
+            </p>
+        </div>
+    `;
+
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk30hoW5tqV7Vy31Ptyq7Ai5dDYhKe3HpvwB00APN29jqikM3NpYTcrkHaJJIhWsU8/exec";
 
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
 
-                // Google Sheet se aaye hue data ko local array mein dalna
-                mockPapers = data.map(item => ({
-                    code: item.course,
-                    sharedBy: item.name,
-                    date: item.dateTime ? item.dateTime.split(" ")[0] : "N/A",
-                    time: item.dateTime ? item.dateTime.split(" ")[1] : "N/A",
-                    type: "Midterm",
-                    content: item.content
-                }));
+                mockPapers = data.map(item => {
+                    // Date formatting logic
+                    let displayDate = "N/A";
+                    let displayTime = "N/A";
+
+                    if (item.dateTime) {
+                        const d = new Date(item.dateTime);
+                        // Sirf tabhi display karein agar date valid ho
+                        if (!isNaN(d.getTime())) {
+                            displayDate = d.toLocaleDateString('en-GB'); // DD/MM/YYYY
+                            displayTime = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                        } else {
+                            // Agar string format mein hai, toh purana tareeka
+                            displayDate = item.dateTime.toString().split(" ")[0];
+                            displayTime = item.dateTime.toString().split(" ")[1] || "";
+                        }
+                    }
+
+                    return {
+                        code: item.course || "N/A",
+                        sharedBy: item.name || "Anonymous",
+                        date: displayDate,
+                        time: displayTime,
+                        type: "Midterm",
+                        content: item.content || ""
+                    };
+                });
 
                 renderPapers(mockPapers);
             } catch (err) {
                 console.log("Error loading data:", err);
+                container.innerHTML = '<p class="text-center text-red-500 font-bold text-xs">Failed to load papers.</p>';
             }
         };
     </script>
