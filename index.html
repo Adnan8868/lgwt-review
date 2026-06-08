@@ -89,6 +89,82 @@
         html.light .bg-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a8a' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
+
+        /* Mobile Optimization */
+        @media (max-width: 640px) {
+
+            main {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+            /* Header */
+            header .max-w-6xl {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            header h1 {
+                font-size: 18px !important;
+                line-height: 1.2;
+            }
+
+            header p {
+                font-size: 10px !important;
+                line-height: 1.3;
+            }
+
+            /* WhatsApp & Resource Cards */
+            .grid.sm\:grid-cols-2>div {
+                padding: 14px !important;
+            }
+
+            .grid.sm\:grid-cols-2 h4 {
+                font-size: 11px !important;
+            }
+
+            .grid.sm\:grid-cols-2 p {
+                font-size: 10px !important;
+            }
+
+            .grid.sm\:grid-cols-2 a {
+                padding: 10px 14px !important;
+                font-size: 9px !important;
+                white-space: nowrap;
+            }
+
+            /* Tabs */
+            .tab-btn {
+                min-height: 90px;
+                font-size: 9px !important;
+                padding: 10px 4px !important;
+            }
+
+            .tab-btn i {
+                font-size: 14px !important;
+            }
+
+            /* Search Box */
+            #searchInput {
+                font-size: 12px !important;
+            }
+
+            /* Paper Cards */
+            .custom-card {
+                border-radius: 18px;
+            }
+
+            /* Review Buttons */
+            .custom-card button,
+            .custom-card a {
+                font-size: 10px !important;
+            }
+
+            /* Footer */
+            footer {
+                padding: 30px 15px !important;
+            }
+        }
     </style>
 </head>
 
@@ -106,13 +182,13 @@
 
     <header class="custom-card border-t-0 border-x-0 backdrop-blur-md sticky top-0 z-50 shadow-sm px-2">
         <div class="max-w-6xl mx-auto py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2 min-w-0">
                 <div
                     class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white text-lg shadow-md shadow-blue-200">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-blue-900 dark:text-white tracking-tight uppercase">
+                   <h1 class="text-lg sm:text-xl font-black text-blue-900 dark:text-white tracking-tight uppercase">
                         VU STUDY <span class="text-yellow-500">LGWT</span>
                     </h1>
                     <p
@@ -121,7 +197,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2 min-w-0">
                 <a href="https://adnan8868.github.io/vulgwt" target="_blank"
                     class="hidden sm:inline-flex items-center gap-2 text-xs font-bold bg-gray-100 hover:bg-gray-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 transition-all">
                     <i class="fa-solid fa-house text-[10px]"></i> Main Portal Home
