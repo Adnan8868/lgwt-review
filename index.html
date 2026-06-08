@@ -529,28 +529,28 @@ ${paper.content}
             }, 3000);
         }
 
+        // GitHub repo mein ye final code lagayein
         window.onload = async () => {
-            // Apne Apps Script ka URL yahan lagayein
+            // Apne Google Web App ka URL yahan paste karein
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk30hoW5tqV7Vy31Ptyq7Ai5dDYhKe3HpvwB00APN29jqikM3NpYTcrkHaJJIhWsU8/exec";
 
             try {
                 const response = await fetch(SCRIPT_URL);
                 const data = await response.json();
 
-                // Data ko 'mockPapers' array mein map karna
+                // Google Sheet se aaye hue data ko local array mein dalna
                 mockPapers = data.map(item => ({
                     code: item.course,
                     sharedBy: item.name,
-                    date: item.dateTime.split(" ")[0] || "",
-                    time: item.dateTime.split(" ")[1] || "",
-                    type: "Midterm", // Default
+                    date: item.dateTime ? item.dateTime.split(" ")[0] : "N/A",
+                    time: item.dateTime ? item.dateTime.split(" ")[1] : "N/A",
+                    type: "Midterm",
                     content: item.content
                 }));
 
                 renderPapers(mockPapers);
             } catch (err) {
-                console.log("Data load karne mein error aaya:", err);
-                renderPapers(mockPapers); // Agar error aaye toh bhi purana data show ho
+                console.log("Error loading data:", err);
             }
         };
     </script>
