@@ -423,6 +423,24 @@ ${paper.content}
             const container = document.getElementById('papersContainer');
             container.innerHTML = '';
 
+            // AGAR DATA KHALI HAI, TOH MESSAGE DIKHAYEIN
+            if (papers.length === 0) {
+                container.innerHTML = `
+            <div class="custom-card rounded-2xl p-8 text-center space-y-4 shadow-sm">
+                <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <div class="space-y-1">
+                    <h4 class="text-sm font-black text-blue-900 dark:text-white uppercase tracking-wider">No Reviews Yet</h4>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold max-w-sm mx-auto leading-relaxed">
+                        No any review available this time. Please share your first review to help others!
+                    </p>
+                </div>
+            </div>
+        `;
+                return; // Function yahin ruk jayega
+            }
+
             papers.forEach((paper, index) => {
                 const card = document.createElement('div');
                 card.className = "custom-card rounded-2xl p-5 space-y-4 shadow-sm hover:border-blue-500 transition-all";
