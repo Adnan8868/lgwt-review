@@ -333,7 +333,7 @@
 
     <script>
 
-        const mockPapers = [];
+        let mockPapers = [];
 
         // Mode Controller Core Engine Config Matrix Toggles
         const themeToggleBtn = document.getElementById('themeToggle');
@@ -529,7 +529,30 @@ ${paper.content}
             }, 3000);
         }
 
-        window.onload = () => { renderPapers(mockPapers); };
+        window.onload = async () => {
+            // Apne Apps Script ka URL yahan lagayein
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk30hoW5tqV7Vy31Ptyq7Ai5dDYhKe3HpvwB00APN29jqikM3NpYTcrkHaJJIhWsU8/exec";
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+
+                // Data ko 'mockPapers' array mein map karna
+                mockPapers = data.map(item => ({
+                    code: item.course,
+                    sharedBy: item.name,
+                    date: item.dateTime.split(" ")[0] || "",
+                    time: item.dateTime.split(" ")[1] || "",
+                    type: "Midterm", // Default
+                    content: item.content
+                }));
+
+                renderPapers(mockPapers);
+            } catch (err) {
+                console.log("Data load karne mein error aaya:", err);
+                renderPapers(mockPapers); // Agar error aaye toh bhi purana data show ho
+            }
+        };
     </script>
 
 
