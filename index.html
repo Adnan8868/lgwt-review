@@ -222,7 +222,8 @@
                         <i class="fa-brands fa-whatsapp"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <h4 class="text-xs font-black text-blue-900 dark:text-white toUpperCase tracking-wider">
+                        <h4
+                            class="text-xs font-black text-blue-900 dark:text-white toUpperCase tracking-wider">
                             Official WhatsApp</h4>
                         <p class="text-[11px] text-slate-400 font-medium truncate mt-0.5">Regular updates aur
                             imp notices</p>
@@ -242,7 +243,8 @@
                         <i class="fa-solid fa-folder-open"></i>
                     </div>
                     <div class="min-w-0 flex-1">
-                        <h4 class="text-xs font-black text-blue-900 dark:text-white toUpperCase tracking-wider">
+                        <h4
+                            class="text-xs font-black text-blue-900 dark:text-white toUpperCase tracking-wider">
                             Resource Vault</h4>
                         <p class="text-[11px] text-slate-400 font-medium truncate mt-0.5">Download free
                             handouts & files</p>
@@ -262,6 +264,11 @@
                 <i class="fa-solid fa-bolt-lightning text-base"></i>
                 <span>Midterm Current</span>
             </button>
+            <button onclick="switchTab('submit-review')" id="tab-submit-review"
+                class="tab-btn py-3 px-2 rounded-xl font-black text-[10px] toUpperCase tracking-wider transition-all cursor-pointer flex flex-col items-center gap-1.5 text-center">
+                <i class="fa-solid fa-paper-plane text-base"></i>
+                <span>Submit Review</span>
+            </button>
             <button onclick="switchTab('final-current')" id="tab-final-current"
                 class="tab-btn py-3 px-2 rounded-xl font-black text-[10px] toUpperCase tracking-wider transition-all cursor-pointer flex flex-col items-center gap-1.5 text-center">
                 <i class="fa-solid fa-clock text-base"></i>
@@ -271,11 +278,6 @@
                 class="tab-btn py-3 px-2 rounded-xl font-black text-[10px] toUpperCase tracking-wider transition-all cursor-pointer flex flex-col items-center gap-1.5 text-center">
                 <i class="fa-solid fa-folder-open text-base"></i>
                 <span>Past Papers</span>
-            </button>
-            <button onclick="switchTab('submit-review')" id="tab-submit-review"
-                class="tab-btn py-3 px-2 rounded-xl font-black text-[10px] toUpperCase tracking-wider transition-all cursor-pointer flex flex-col items-center gap-1.5 text-center">
-                <i class="fa-solid fa-paper-plane text-base"></i>
-                <span>Submit Review</span>
             </button>
         </div>
 
@@ -578,10 +580,15 @@ ${paper.content}
         async function handleSubmit(event) {
             event.preventDefault();
 
-            // 1. Apne Apps Script ka URL yahan lagayein
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            // 1. Double-click protection
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Please Wait...`;
+
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk30hoW5tqV7Vy31Ptyq7Ai5dDYhKe3HpvwB00APN29jqikM3NpYTcrkHaJJIhWsU8/exec";
 
-            // 2. Data nikalna
             const name = document.getElementById('formName').value;
             const course = document.getElementById('formCourse').value.toUpperCase();
             const dateTimeValue = new Date(document.getElementById('formDateTime').value);
@@ -594,7 +601,6 @@ ${paper.content}
             const formData = { name, course, date, time, type, content };
 
             try {
-                // 3. Google Sheet ko data bhejna
                 await fetch(SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
@@ -602,14 +608,19 @@ ${paper.content}
                     body: JSON.stringify(formData)
                 });
 
-                // 4. UI update karna
+                // 2. Naya review top par add karein (unshift use karein)
                 mockPapers.unshift({ code: course, sharedBy: name, date, time, type, content });
+
                 showToast('✅ Paper Review Submit Successfully!');
                 event.target.reset();
                 switchTab('midterm-current');
-                handleSearch();
+                renderPapers(mockPapers); // Dobara render karein
             } catch (error) {
                 showToast('❌ Error: Data save nahi hua!');
+            } finally {
+                // Button wapis restore karein
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
             }
         }
 
@@ -642,18 +653,15 @@ ${paper.content}
                 const data = await response.json();
 
                 mockPapers = data.map(item => {
-                    // Date formatting logic
                     let displayDate = "N/A";
                     let displayTime = "N/A";
 
                     if (item.dateTime) {
                         const d = new Date(item.dateTime);
-                        // Sirf tabhi display karein agar date valid ho
                         if (!isNaN(d.getTime())) {
-                            displayDate = d.toLocaleDateString('en-GB'); // DD/MM/YYYY
+                            displayDate = d.toLocaleDateString('en-GB');
                             displayTime = d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                         } else {
-                            // Agar string format mein hai, toh purana tareeka
                             displayDate = item.dateTime.toString().split(" ")[0];
                             displayTime = item.dateTime.toString().split(" ")[1] || "";
                         }
@@ -669,12 +677,16 @@ ${paper.content}
                     };
                 });
 
+                // 1. REVERSE SORTING: Latest reviews sabse upar ayenge
+                mockPapers.reverse();
+
                 renderPapers(mockPapers);
             } catch (err) {
                 console.log("Error loading data:", err);
                 container.innerHTML = '<p class="text-center text-red-500 font-bold text-xs">Failed to load papers.</p>';
             }
         };
+
     </script>
 
 
