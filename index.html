@@ -224,7 +224,7 @@
                     <div class="min-w-0 flex-1">
                         <h4
                             class="text-xs font-black text-blue-900 dark:text-white toUpperCase tracking-wider">
-                            Official WhatsApp</h4>
+                            Current Paper</h4>
                         <p class="text-[11px] text-slate-400 font-medium truncate mt-0.5">Regular updates aur
                             imp notices</p>
                     </div>
@@ -245,14 +245,14 @@
                     <div class="min-w-0 flex-1">
                         <h4
                             class="text-xs font-black text-blue-900 dark:text-white toUpperCase tracking-wider">
-                            Resource Vault</h4>
+                            Resource Files</h4>
                         <p class="text-[11px] text-slate-400 font-medium truncate mt-0.5">Download free
                             handouts & files</p>
                     </div>
                 </div>
                 <a href="https://adnan8868.github.io/vulgwt" target="_blank"
                     class="bg-blue-600 hover:bg-blue-700 text-white font-black text-[10px] toUpperCase tracking-wider px-4 py-3 rounded-xl transition-all shadow-md shrink-0">
-                    Open Vault
+                    Open Hub
                 </a>
             </div>
         </div>
@@ -267,7 +267,7 @@
             <button onclick="switchTab('submit-review')" id="tab-submit-review"
                 class="tab-btn py-3 px-2 rounded-xl font-black text-[10px] toUpperCase tracking-wider transition-all cursor-pointer flex flex-col items-center gap-1.5 text-center">
                 <i class="fa-solid fa-paper-plane text-base"></i>
-                <span>Submit Review</span>
+                <span>Share Review</span>
             </button>
             <button onclick="switchTab('final-current')" id="tab-final-current"
                 class="tab-btn py-3 px-2 rounded-xl font-black text-[10px] toUpperCase tracking-wider transition-all cursor-pointer flex flex-col items-center gap-1.5 text-center">
@@ -374,7 +374,7 @@
                             Type</label>
                         <select id="formType" class="w-full custom-input rounded-xl p-3 text-xs font-bold">
                             <option value="Midterm">Midterm</option>
-                            <option value="Finalterm">Finalterm</option>
+                          //  <option value="Finalterm">Finalterm</option>
                         </select>
                     </div>
                 </div>
@@ -489,12 +489,10 @@
 🕐 *Time:* ${paper.time}
 👤 *Shared by:* ${paper.sharedBy}
 *Paper Content:*
-
-${paper.content}
-
-📢 *FOR LATEST VU UPDATES & LIVE HELP* 🟢 *Join Our WhatsApp Channel Now:* 🔗 https://whatsapp.com/channel/0029VbAfKscEVccSHYySNP3I
+        ${paper.content}
 ━━━━━━━━━━━━━━━━━━
-*LGWT Community*`;
+📢 *FOR LATEST VU UPDATES & LIVE HELP* 
+🟢 *Join Our WhatsApp Channel Now:* 🔗 https://whatsapp.com/channel/0029VbAfKscEVccSHYySNP3I`;
         }
 
         function renderPapers(papers) {
