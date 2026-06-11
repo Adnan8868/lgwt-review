@@ -1,33 +1,20 @@
-// Disable Right Click
-document.addEventListener("contextmenu", function (e) {
-    e.preventDefault();
-});
+// ====== VU LGWT ANTI-INSPECT ENGINE ======
 
-// Disable Common Developer Shortcuts
-document.addEventListener("keydown", function (e) {
+// 1. Right-Click Block
+document.addEventListener('contextmenu', event => event.preventDefault());
 
-    // F12
+// 2. Keyboard Shortcuts Block (F12, Ctrl+U, Ctrl+Shift+I/J/C)
+document.addEventListener('keydown', function(e) {
+    // F12 Disable
     if (e.key === "F12") {
         e.preventDefault();
     }
-
-    // Ctrl + Shift + I
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
+    // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C Disable
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.key === 'i' || e.key === 'j' || e.key === 'c')) {
         e.preventDefault();
     }
-
-    // Ctrl + Shift + J
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
-        e.preventDefault();
-    }
-
-    // Ctrl + U
-    if (e.ctrlKey && e.key.toLowerCase() === "u") {
-        e.preventDefault();
-    }
-
-    // Ctrl + Shift + C
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "c") {
+    // Ctrl+U (View Source) Disable
+    if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
         e.preventDefault();
     }
 });
