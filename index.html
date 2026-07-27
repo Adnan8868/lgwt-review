@@ -77,7 +77,17 @@
                 font-size: 18px !important;
             }
         }
-    </style>
+    
+/* Mobile Light Mode Color Fix */
+html.light .custom-card{background:#fff!important;border-color:#dbe4ef!important;}
+html.light .paper-content-box{background:#f8fafc!important;border:1px solid #e2e8f0!important;}
+html.light .paper-content-box p{color:#0f172a!important;}
+html.light .review-meta{color:#334155!important;}
+html.light .review-meta strong,html.light .review-meta span{color:#0f172a!important;}
+html.light .posted-info{color:#475569!important;}
+html.light .posted-info span{color:#0f172a!important;}
+
+</style>
 </head>
 
 <body
@@ -280,7 +290,428 @@
         class="fixed top-5 right-5 bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-lg font-medium text-xs hidden z-50">
     </div>
 
-    <script src="output.js"></script>
+    <script>
+        
+        let mockPapers = [];
+        let currentFilteredPapers = [];
+
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        if (htmlElement.classList.contains('light')) {
+            themeIcon.className = 'fa-solid fa-sun text-lg';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                htmlElement.classList.add('light');
+                themeIcon.className = 'fa-solid fa-sun text-lg';
+            } else {
+                htmlElement.classList.remove('light');
+                htmlElement.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-moon text-lg';
+            }
+        });
+
+        // Format time string into 12-hour AM/PM format
+        function formatAMPM(timeStr) {
+            if (!timeStr || timeStr === "N/A") return "N/A";
+            if (/am|pm/i.test(timeStr)) return timeStr;
+
+            const timeParts = timeStr.trim().split(':');
+            if (timeParts.length >= 2) {
+                let h = parseInt(timeParts[0], 10);
+                const m = timeParts[1].substring(0, 2);
+                if (isNaN(h)) return timeStr;
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                h = h % 12 || 12;
+                return `${h.toString().padStart(2, '0')}:${m} ${ampm}`;
+            }
+            return timeStr;
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.replace('block', 'hidden'));
+            document.getElementById(`content-${tabId}`).classList.replace('hidden', 'block');
+
+            const inactiveStyle = "px-4 py-2 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-all duration-200 flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer";
+
+            document.getElementById('tab-final-current').className = inactiveStyle;
+            document.getElementById('tab-submit-review').className = inactiveStyle;
+
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (tabId === 'final-current') {
+                activeBtn.className = "px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 bg-amber-500 text-slate-950 shadow-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer";
+            } else {
+                activeBtn.className = "px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 bg-purple-600 text-white shadow-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer";
+            }
+        }
+
+        function updateCopyButtonVisibility(query, count) {
+            const btn = document.getElementById('copyAllBtn');
+            if (query && query.length > 0 && count >= 2) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toUpperCase();
+            const container = document.getElementById('papersContainer');
+
+            if (!query) {
+                currentFilteredPapers = [];
+                updateCopyButtonVisibility('', 0);
+                renderPapers(mockPapers);
+                return;
+            }
+
+            currentFilteredPapers = mockPapers.filter(paper => paper.code.includes(query));
+            updateCopyButtonVisibility(query, currentFilteredPapers.length);
+
+            if (currentFilteredPapers.length > 0) {
+                renderPapers(currentFilteredPapers);
+            } else {
+                container.innerHTML = `
+                    <div class="custom-card rounded-2xl p-8 text-center space-y-4 shadow-sm">
+                        <div class="w-12 h-12 bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 rounded-xl flex items-center justify-center mx-auto text-lg">
+                            <i class="fa-regular fa-calendar-xmark"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">Not Found</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 font-normal max-w-sm mx-auto leading-relaxed">
+                                "${query}" ke liye abhi koi review nahi mila. Aap Direct WhatsApp par help le sakte hain!
+                            </p>
+                        </div>
+                        <div class="pt-2 flex justify-center">
+                            <a href="https://wa.me/923196248868?text=Assalam-o-Alaikum LGWT! Mujhe ${query} ka current paper review chahiye, kindly help kar dein." 
+                                target="_blank" 
+                                class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-md transition-all">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Contact via WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function copyAllFilteredReviews() {
+            if (currentFilteredPapers.length === 0) {
+                showToast('❌ Copy karne ke liye koi review nahi hai!');
+                return;
+            }
+
+            const query = document.getElementById('searchInput').value.trim().toUpperCase();
+            let combinedText = "";
+            if (query) {
+                combinedText += `📖 *Course Code:* ${query}\n`;
+            }
+            combinedText += `📚 *Total Reviews Found:* ${currentFilteredPapers.length}\n`;
+            combinedText += `Final-Term\n`;
+            combinedText += `━━━━━━━━━━━━━━━━━━\n\n`;
+
+            currentFilteredPapers.forEach((paper, index) => {
+                combinedText += `📝 *Review #${index + 1}* (${paper.code})\n`;
+                combinedText += `👤 *Shared by:* ${paper.sharedBy}\n`;
+                combinedText += `📅 *Date/Time:* ${paper.date} | ${paper.time}\n`;
+                combinedText += `*Content:*\n${paper.content}\n`;
+                combinedText += `──────────────────\n\n`;
+            });
+
+            combinedText += `📢 *FOR LATEST VU UPDATES Join Our WhatsApp Channel Now:* \n🔗 https://whatsapp.com/channel/0029VbAfKscEVccSHYySNP3I`;
+
+            navigator.clipboard.writeText(combinedText).then(() => {
+                const btn = document.getElementById('copyAllBtn');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = `<i class="fa-solid fa-check text-green-300"></i> All Copied!`;
+                btn.disabled = true;
+
+                showToast('✅ All Reviews Copied!');
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Error combining text data: ', err);
+            });
+        }
+
+        function buildFormattedText(paper) {
+            return `📖 *Course Code:* ${paper.code}\n📚 *Exam:* Final-Term\n📅 *Date:* ${paper.date}\n🕐 *Time:* ${paper.time}\n👤 *Shared by:* ${paper.sharedBy}\n\n*Paper Content:*\n${paper.content}\n━━━━━━━━━━━━━━━━━━\n📢 *FOR LATEST VU UPDATES Join Our WhatsApp Channel:* \n🔗 https://whatsapp.com/channel/0029VbAfKscEVccSHYySNP3I`;
+        }
+
+        function renderPapers(papers) {
+            const container = document.getElementById('papersContainer');
+            container.innerHTML = '';
+
+            if (papers.length === 0) {
+                container.innerHTML = `
+                    <div class="custom-card rounded-2xl p-8 text-center space-y-3 shadow-sm">
+                        <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-xl flex items-center justify-center mx-auto text-lg">
+                            <i class="fa-solid fa-folder-open"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-xs font-bold text-slate-800 dark:text-white uppercase tracking-wider">No Reviews Yet</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 font-normal max-w-sm mx-auto">
+                                Abhi koi review available nahi hai. Apna review share karke doosron ki madad karein!
+                            </p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            papers.forEach((paper) => {
+                const card = document.createElement('div');
+                card.className = "custom-card rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm hover:border-blue-500/60 transition-all";
+
+                const textStructure = buildFormattedText(paper);
+                const encodedData = window.btoa(unescape(encodeURIComponent(textStructure)));
+
+                card.innerHTML = `
+                    <!-- Clean Responsive Card Header -->
+                    <div class="border-b border-slate-200 dark:border-slate-800/80 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3">
+                        <!-- Left: Big Prominent Subject Code Badge -->
+                        <div class="flex items-center gap-2">
+                            <span class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs px-3.5 py-1.5 rounded-xl font-black tracking-wider uppercase shadow-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-book-bookmark text-[11px] text-yellow-300"></i> ${paper.code}
+                            </span>
+                            <span class="bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] px-2.5 py-1 rounded-lg font-bold border border-amber-500/20 uppercase tracking-wide">Finalterm</span>
+                        </div>
+
+                        <!-- Right / Sub: Shared By, Date & Time -->
+                        <div class="review-meta flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-700 dark:text-slate-300 font-semibold">
+                            <span class="flex items-center gap-1">
+                                <i class="fa-regular fa-user text-blue-600 dark:text-blue-400"></i> Shared by: <strong class="text-slate-900 dark:text-slate-100 font-bold">${paper.sharedBy}</strong>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fa-regular fa-calendar text-blue-600 dark:text-blue-400"></i> Date: <span class="font-bold text-green-500 dark:text-slate-100">${paper.date}</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fa-regular fa-clock text-blue-600 dark:text-blue-400"></i> Time: <span class="font-bold text-green-500 dark:text-slate-100">${paper.time}</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Main Paper Body Content Box (High Contrast Text Fix for Light Mode) -->
+                    <div class="paper-content-box bg-slate-50 dark:bg-slate-900/60 p-3.5 sm:p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/60">
+                        <p class="text-xs sm:text-sm text-slate-900 dark:text-slate-100 whitespace-pre-line leading-relaxed font-normal">${paper.content}</p>
+                    </div>
+
+                    <!-- Bottom Section (Posted On Always Visible on Mobile) -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1 border-t border-slate-100 dark:border-slate-800/60">
+                        <div class="posted-info text-[11px] text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-500 text-[11px]"></i> Posted on: <span class="text-slate-800 dark:text-slate-200 font-medium">${paper.postedAt}</span>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2 w-full sm:w-auto">
+                            <button onclick="copyToClipboard(this, '${encodedData}')" class="flex-1 sm:flex-initial justify-center bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 sm:py-2 rounded-xl text-[10px] uppercase tracking-wider font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-regular fa-copy text-xs"></i> Copy Review
+                            </button>
+                            <button onclick="shareToWhatsApp('${encodedData}')" class="flex-1 sm:flex-initial justify-center bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-3.5 py-2.5 sm:py-2 rounded-xl text-[10px] uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-xs"></i> Share Review
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function copyToClipboard(buttonElement, encodedData) {
+            const decodedText = decodeURIComponent(escape(window.atob(encodedData)));
+
+            navigator.clipboard.writeText(decodedText).then(() => {
+                const originalContent = buttonElement.innerHTML;
+                buttonElement.innerHTML = `<i class="fa-solid fa-check text-emerald-500"></i> Copied!`;
+                buttonElement.disabled = true;
+
+                setTimeout(() => {
+                    buttonElement.innerHTML = originalContent;
+                    buttonElement.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Error: ', err);
+            });
+        }
+
+        function shareToWhatsApp(encodedData) {
+            const decodedText = decodeURIComponent(escape(window.atob(encodedData)));
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(decodedText)}`, '_blank');
+        }
+
+        // Auto-dash (-) on 2 characters & Strict Validation (DD-MM-YYYY)
+        function formatDateInput(input) {
+            let value = input.value.replace(/\D/g, '');
+            let formattedValue = '';
+
+            // 1. DAY PART (Max 31)
+            if (value.length > 0) {
+                let dayStr = value.substring(0, 2);
+                if (dayStr.length === 2) {
+                    let day = parseInt(dayStr, 10);
+                    if (day > 31) dayStr = '31';
+                    if (day < 1) dayStr = '01';
+                }
+                formattedValue += dayStr;
+                if (value.length >= 2) {
+                    formattedValue += '-';
+                }
+            }
+
+            // 2. MONTH PART (Max 12)
+            if (value.length > 2) {
+                let monthStr = value.substring(2, 4);
+                if (monthStr.length === 2) {
+                    let month = parseInt(monthStr, 10);
+                    if (month > 12) monthStr = '12';
+                    if (month < 1) monthStr = '01';
+                }
+                formattedValue += monthStr;
+                if (value.length >= 4) {
+                    formattedValue += '-';
+                }
+            }
+
+            // 3. YEAR PART (Max 4 digits)
+            if (value.length > 4) {
+                formattedValue += value.substring(4, 8);
+            }
+
+            input.value = formattedValue;
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Submitting...`;
+
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk30hoW5tqV7Vy31Ptyq7Ai5dDYhKe3HpvwB00APN29jqikM3NpYTcrkHaJJIhWsU8/exec";
+
+            const name = document.getElementById('formName').value;
+            const course = document.getElementById('formCourse').value.toUpperCase();
+
+            const formattedDate = document.getElementById('formDate').value; 
+            const rawTime = document.getElementById('formTime').value; 
+
+            // Convert Time to 12-hour AM/PM
+            const formattedTime = formatAMPM(rawTime);
+
+            const content = document.getElementById('formContent').value;
+            const type = "Finalterm";
+
+            const now = new Date();
+            const postedAt = `${now.toLocaleDateString('en-GB')}, ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+
+            const formData = { name, course, date: formattedDate, time: formattedTime, type, content, postedAt };
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                });
+
+                mockPapers.unshift({ code: course, sharedBy: name, date: formattedDate, time: formattedTime, type, content, postedAt });
+
+                showToast('✅ Paper Review Submitted Successfully!');
+                event.target.reset();
+                switchTab('final-current');
+                handleSearch();
+            } catch (error) {
+                showToast('❌ Error: Data save nahi hua!');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        window.onload = async () => {
+            const container = document.getElementById('papersContainer');
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-16 space-y-4">
+                    <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-xs font-black text-blue-500 uppercase tracking-widest animate-pulse">
+                        Please Wait Loading...
+                    </p>
+                </div>
+            `;
+
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk30hoW5tqV7Vy31Ptyq7Ai5dDYhKe3HpvwB00APN29jqikM3NpYTcrkHaJJIhWsU8/exec";
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+
+                mockPapers = data.map((item, index) => {
+                    let displayDate = item.date || "N/A";
+                    let displayTime = item.time || "N/A";
+
+                    if (item.dateTime || item.DateTime) {
+                        const rawDt = item.dateTime || item.DateTime;
+                        const parts = rawDt.toString().split(" ");
+                        displayDate = parts[0] || displayDate;
+                        displayTime = parts.slice(1).join(" ") || displayTime;
+                    }
+
+                    displayTime = formatAMPM(displayTime);
+
+                    let displayPostedAt = "Recently";
+                    const rawTimestamp = item.postedAt || item.timestamp || item.created_at || item.Timestamp;
+                    
+                    if (rawTimestamp) {
+                        const d = new Date(rawTimestamp);
+                        if (!isNaN(d.getTime())) {
+                            displayPostedAt = `${d.toLocaleDateString('en-GB')}, ${d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+                        } else {
+                            displayPostedAt = rawTimestamp;
+                        }
+                    } else if (displayDate !== "N/A") {
+                        displayPostedAt = displayDate;
+                    }
+
+                    return {
+                        code: item.course || item.CourseCode || "N/A",
+                        sharedBy: item.name || item.Name || "Anonymous",
+                        date: displayDate,
+                        time: displayTime,
+                        type: "Finalterm",
+                        content: item.content || item.PaperContent || "",
+                        postedAt: displayPostedAt
+                    };
+                });
+
+                mockPapers.reverse();
+
+                currentFilteredPapers = [];
+                updateCopyButtonVisibility('', 0);
+
+                renderPapers(mockPapers);
+            } catch (err) {
+                console.log("Error loading data:", err);
+                container.innerHTML = '<p class="text-center text-red-500 font-semibold text-xs">Failed to load papers.</p>';
+            }
+        };
+    </script>
     <script src="./anti-inspect.js"></script>
 </body>
 
