@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
         }
 
@@ -244,7 +244,7 @@
                             class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400 text-xs"></i>
                         <input type="text" id="searchInput" oninput="handleSearch()"
                             placeholder="Search Course Code (e.g. CS101, MTH101)"
-                            class="w-full custom-input rounded-xl py-3 pl-11 pr-4 text-xs font-medium uppercase placeholder:normal-case shadow-inner">
+                            class="w-full custom-input rounded-xl py-3 pl-11 pr-4 text-xs font-semibold uppercase placeholder:normal-case shadow-inner">
                     </div>
                     <button id="copyAllBtn" onclick="copyAllFilteredReviews()"
                         class="hidden w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-3 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer">
@@ -252,30 +252,29 @@
                     </button>
                 </div>
 
-                <!-- NEW: Updated Dynamic Search Count Banner with Light-Font Badge Design -->
+                <!-- NEW: Dynamic Search Count Banner -->
                 <div id="searchCounterBox"
-                    class="hidden bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 rounded-xl px-4 py-2.5 flex items-center justify-center gap-2 text-xs font-medium text-indigo-900 dark:text-indigo-200">
-                    <i class="fa-solid fa-book text-indigo-600 dark:text-indigo-400 text-sm"></i>
-                    <span id="searchCounterText" class="tracking-wide text-center">
-                        Total papers found for <strong class="font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-xs sm:text-sm px-1.5 py-0.5 bg-indigo-100/70 dark:bg-indigo-900/60 rounded">CS101</strong> : <span class="font-bold text-indigo-700 dark:text-indigo-300">0</span>
-                    </span>
+                    class="hidden bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-2.5 flex items-center justify-center gap-2 text-xs font-bold text-blue-600 dark:text-blue-400">
+                    <i class="fa-solid fa-book text-sm"></i>
+                    <span id="searchCounterText">Total papers found for CS101 : 0</span>
                 </div>
             </div>
             <div id="papersContainer" class="space-y-4"></div>
         </section>
 
-        <!-- Tab 2: Share Review Experience Form (Optimized for 2-column Grid on Mobile) -->
+        <!-- Tab 2: Share Review Experience Form -->
         <section id="content-submit-review" class="tab-content hidden">
             <form onsubmit="handleSubmit(event)"
-                class="custom-card rounded-3xl p-5 sm:p-8 space-y-5 shadow-md border-t-4 border-t-blue-600">
+            
+                class="custom-card rounded-3xl p-6 sm:p-8 space-y-6 shadow-md border-t-4 border-t-blue-600">
 
-                <div class="border-b border-slate-200 dark:border-slate-800/80 pb-4 space-y-1.5">
+                <div class="border-b border-slate-200 dark:border-slate-800/80 pb-5 space-y-2">
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[11px] font-semibold uppercase tracking-widest border border-blue-500/20">
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[11px] font-extrabold uppercase tracking-widest border border-blue-500/20">
                         <i class="fa-solid fa-pen-to-square"></i> Student Portal Review
                     </div>
                     <h2
-                        class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent uppercase tracking-tight">
+                        class="text-xl sm:text-2xl font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent uppercase tracking-tight">
                         Share Your Exam Experience
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">
@@ -284,53 +283,52 @@
                     </p>
                 </div>
 
-                <!-- Mobile Column Grid Fix (2-Columns on all screen sizes) -->
-                <div class="grid grid-cols-2 gap-3 sm:gap-5">
-                    <div class="space-y-1">
+                <div class="grid grid-cols-2 md:grid-cols-2 gap-5">
+                    <div class="space-y-1.5">
                         <label
-                            class="text-[10px] sm:text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Your
+                            class="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Your
                             Name <span class="text-red-500">*</span></label>
                         <input type="text" id="formName" required placeholder="Enter your name"
-                            class="w-full custom-input rounded-xl p-2.5 sm:p-3 text-xs font-medium">
+                            class="w-full custom-input rounded-xl p-3 text-xs font-medium">
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <label
-                            class="text-[10px] sm:text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Course
+                            class="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Course
                             Code <span class="text-red-500">*</span></label>
                         <input type="text" id="formCourse" required placeholder="e.g., CS201"
-                            class="w-full custom-input rounded-xl p-2.5 sm:p-3 text-xs font-semibold uppercase">
+                            class="w-full custom-input rounded-xl p-3 text-xs font-medium uppercase">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3 sm:gap-5">
-                    <div class="space-y-1">
+                <div class="grid grid-cols-2 md:grid-cols-2 gap-5">
+                    <div class="space-y-1.5">
                         <label
-                            class="text-[10px] sm:text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Exam
+                            class="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Exam
                             Date <span class="text-red-500">*</span></label>
-                        <input type="text" id="formDate" required placeholder="DD-MM-YYYY"
+                        <input type="text" id="formDate" required placeholder="DD-MM-YYYY (e.g., 27-07-2026)"
                             maxlength="10" oninput="formatDateInput(this)"
-                            class="w-full custom-input rounded-xl p-2.5 sm:p-3 text-xs font-medium">
+                            class="w-full custom-input rounded-xl p-3 text-xs font-medium">
                     </div>
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <label
-                            class="text-[10px] sm:text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Exam
+                            class="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Exam
                             Time <span class="text-red-500">*</span></label>
                         <input type="time" id="formTime" required
-                            class="w-full custom-input rounded-xl p-2.5 sm:p-3 text-xs font-medium">
+                            class="w-full custom-input rounded-xl p-3 text-xs font-medium">
                     </div>
                 </div>
 
                 <div class="space-y-1.5">
                     <label
-                        class="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Paper
+                        class="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Paper
                         Content <span class="text-red-500">*</span></label>
                     <textarea id="formContent" rows="5" required
                         placeholder="Write paper details, MCQs topics, short questions, long questions..."
-                        class="w-full custom-input rounded-xl p-3 sm:p-4 text-xs font-normal leading-relaxed"></textarea>
+                        class="w-full custom-input rounded-xl p-4 text-xs font-medium leading-relaxed"></textarea>
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold py-3.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 uppercase tracking-widest">
+                    class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-extrabold py-3.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 uppercase tracking-widest">
                     <i class="fa-solid fa-paper-plane text-[11px]"></i> Submit Your Paper Review
                 </button>
             </form>
