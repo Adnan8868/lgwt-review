@@ -147,6 +147,14 @@
         html.light .custom-input::placeholder {
             color: #94a3b8 !important;
         }
+        /* FIX FOR OVERFLOWING LINKS / TEXT ON MOBILE */
+        .paper-content-box,
+        .paper-content-box p,
+        .paper-content-box div,
+        .custom-card {
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
     </style>
 </head>
 
