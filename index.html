@@ -14,157 +14,8 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        *,
-        *::before,
-        *::after {
-            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        :root {
-            --bg-app: #f8fafc;
-            --bg-card: #ffffff;
-            --border-color: #e2e8f0;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --input-bg: #ffffff;
-        }
-
-        body {
-            background-color: var(--bg-app);
-            color: var(--text-main);
-        }
-
-        .custom-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-        }
-
-        .custom-input {
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-        }
-
-        .custom-input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-            outline: none;
-        }
-
-        .bg-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e3a8a' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        @media (max-width: 640px) {
-            main {
-                padding-left: 12px !important;
-                padding-right: 12px !important;
-            }
-
-            header h1 {
-                font-size: 18px !important;
-            }
-        }
-
-        /* Mobile Light Mode Color Fix */
-        .custom-card {
-            background: #fff !important;
-            border-color: #dbe4ef !important;
-        }
-
-        .paper-content-box {
-            background: #f8fafc !important;
-            border: 1px solid #e2e8f0 !important;
-        }
-
-        .paper-content-box p {
-            color: #0f172a !important;
-        }
-
-        .review-meta {
-            color: #334155 !important;
-        }
-
-        .review-meta strong {
-            color: #0f172a;
-        }
-
-        .review-meta .text-green-500 {
-            color: #22c55e !important;
-        }
-
-        .posted-info {
-            color: #475569 !important;
-        }
-
-        .posted-info span {
-            color: #0f172a !important;
-        }
-
-        form.custom-card {
-            background: #ffffff !important;
-            border-color: #dbe4ef !important;
-        }
-
-        form.custom-card label {
-            color: #334155 !important;
-        }
-
-        form.custom-card h2 {
-            filter: none;
-        }
-
-        form.custom-card p {
-            color: #475569 !important;
-        }
-
-        .custom-input {
-            background: #fff !important;
-            color: #0f172a !important;
-            border-color: #dbe4ef !important;
-        }
-
-        .custom-input::placeholder {
-            color: #94a3b8 !important;
-        }
-
-        /* FIX FOR OVERFLOWING LINKS / TEXT ON MOBILE */
-        .paper-content-box,
-        .paper-content-box p,
-        .paper-content-box div,
-        .custom-card {
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
-
-        /* ================= MOBILE LIGHT MODE COLOR FIX ================= */
-
-        .review-meta .course-code,
-        .course-code {
-            color: #2563eb !important;
-            /* Blue */
-            font-weight: 800 !important;
-        }
-
-        #searchCounterText span {
-            color: #2563eb !important;
-            font-weight: 800 !important;
-        }
-
-        #searchCounterBox {
-            color: #3b82f6 !important;
-        }
-
-        #searchCounterBox i {
-            color: #3b82f6 !important;
-        }
-    </style>
+    
+        <link rel="stylesheet" href="style.css">
 </head>
 
 <body
@@ -231,7 +82,7 @@
 
                     <button id="tab-mid-current" onclick="switchTab('mid-current')"
                         class="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 bg-amber-500 text-slate-950 shadow-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer">
-                        <i class="fa-solid fa-bolt-lightning"></i> Mid-Term
+                        <i class="fa-solid fa-bolt-lightning"></i> Midterm
                     </button>
 
                     <button id="tab-submit-review" onclick="switchTab('submit-review')"
@@ -243,7 +94,7 @@
             </div>
         </div>
 
-        <!-- Tab 1: Mid-Term Live View -->
+        <!-- Tab 1: Midterm Live View -->
         <section id="content-mid-current" class="tab-content block space-y-6">
             <div class="custom-card rounded-2xl p-4 shadow-sm relative overflow-hidden space-y-3">
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
@@ -356,7 +207,7 @@
         class="fixed top-5 right-5 bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-lg font-medium text-xs hidden z-50">
     </div>
 
-    <script src="./output.js"></script>
+    <script src="script.js"></script>
     <script src="./anti-inspect.js"></script>
 </body>
 
