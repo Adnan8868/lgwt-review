@@ -14,158 +14,165 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body
     class="bg-pattern min-h-screen antialiased selection:bg-blue-600 selection:text-white flex flex-col justify-between">
 
-    <!-- Navigation Header -->
-    <header class="custom-card border-t-0 border-x-0 backdrop-blur-lg sticky top-0 z-40 shadow-sm px-4">
-        <div class="max-w-5xl mx-auto py-3.5 flex justify-between items-center">
-            <div class="flex items-center space-x-3 min-w-0">
+    <!-- Compact Navigation Header with Corner WhatsApp & Portal Icons -->
+    <header class="custom-card border-t-0 border-x-0 backdrop-blur-lg sticky top-0 z-40 shadow-sm px-3 sm:px-4">
+        <div class="max-w-5xl mx-auto py-2.5 sm:py-3.5 flex justify-between items-center gap-2">
+            <div class="flex items-center space-x-2.5 min-w-0">
                 <div
-                    class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-lg shadow-md shadow-blue-500/20">
+                    class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-base sm:text-lg shadow-md shadow-blue-500/20 shrink-0">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
-                <div>
+                <div class="truncate">
                     <h1
-                        class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent tracking-tight uppercase">
+                        class="text-base sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent tracking-tight uppercase truncate">
                         VU STUDY <span class="text-yellow-500">LGWT</span>
                     </h1>
-                    <p class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase mt-0.5">
-                        Current Exam Paper Bank
+                    <p class="text-[9px] sm:text-[10px] text-slate-500 font-semibold tracking-wider uppercase truncate">
+                        Exam Paper Bank
                     </p>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-2">
-                <a href="https://adnan8868.github.io/vulgwt" target="_blank"
-                    class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl border border-slate-200 transition-all shadow-sm">
-                    <i class="fa-solid fa-house text-[10px]"></i> Main Portal
+            <!-- Corner Compact Action Icons (WhatsApp + Main Portal) -->
+            <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+                <a href="https://whatsapp.com/channel/0029VbD6QnbHwXbGrXkYza43" target="_blank"
+                    title="Join WhatsApp Channel"
+                    class="inline-flex items-center gap-1.5 text-[11px] font-semibold bg-emerald-500 hover:bg-emerald-600 text-white px-2.5 py-2 sm:px-3.5 sm:py-2 rounded-xl transition-all shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span class="hidden sm:inline">Channel</span>
+                </a>
+                <a href="https://adnan8868.github.io/vulgwt" target="_blank" title="Main Portal"
+                    class="inline-flex items-center gap-1.5 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-2 sm:px-3.5 sm:py-2 rounded-xl border border-slate-200 transition-all shadow-sm">
+                    <i class="fa-solid fa-house text-xs"></i>
+                    <span class="hidden sm:inline">Portal</span>
                 </a>
             </div>
         </div>
     </header>
 
     <!-- Main Content Hub -->
-    <main class="max-w-5xl w-full mx-auto px-4 py-8 flex-1">
+    <main class="max-w-5xl w-full mx-auto px-3 sm:px-4 py-4 sm:py-6 flex-1">
 
-        <!-- Unified Compact Utilities Row -->
-        <div
-            class="bg-white border border-slate-200/70 p-4 rounded-2xl shadow-sm mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="text-center sm:text-left">
-                <h4 class="text-xs font-semibold text-slate-800 uppercase tracking-wide">
-                    Alternative Access Utilities</h4>
-                <p class="text-[11px] text-slate-500 font-medium">Browse central channels
-                    directly or open resource hubs.</p>
-            </div>
-            <div class="flex flex-wrap items-center justify-center gap-2 w-full sm:w-auto">
-                <a href="https://whatsapp.com/channel/0029VbD6QnbHwXbGrXkYza43" target="_blank"
-                    class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm uppercase tracking-wider text-center">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Current Paper
-                </a>
-                <a href="https://lgwt.online/" target="_blank"
-                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm uppercase tracking-wider text-center">
-                    <i class="fa-solid fa-folder-open text-sm"></i> Resource Hub
-                </a>
+        <!-- Compact 2-Tab Navigation -->
+        <div class="flex items-center justify-between gap-3 pb-3.5 mb-4 border-b border-slate-200">
+            <div
+                class="flex bg-slate-100 p-1 rounded-xl gap-1 border border-slate-200/40 w-full sm:w-auto justify-between sm:justify-start">
+
+                <button id="tab-browse-papers" onclick="switchTab('browse-papers')"
+                    class="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 bg-amber-500 text-slate-950 shadow-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer">
+                    <i class="fa-solid fa-bolt-lightning"></i> Paper Reviews
+                </button>
+
+                <button id="tab-submit-review" onclick="switchTab('submit-review')"
+                    class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-200 flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer">
+                    <i class="fa-solid fa-paper-plane"></i> Share Review
+                </button>
+
             </div>
         </div>
 
-        <!-- Clean 2-Tab Navigation -->
-        <div
-            class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 mb-6 border-b border-slate-200">
-            <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-                <div
-                    class="flex bg-slate-100 p-1 rounded-xl gap-1 border border-slate-200/20 w-full sm:w-auto justify-between sm:justify-start">
+        <!-- Tab 1: Multi-Semester Live & Archive View -->
+        <section id="content-browse-papers" class="tab-content block space-y-3.5">
 
-                    <button id="tab-final-current" onclick="switchTab('final-current')"
-                        class="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 bg-amber-500 text-slate-950 shadow-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer">
-                        <i class="fa-solid fa-bolt-lightning"></i> Finalterm
-                    </button>
-
-                    <button id="tab-submit-review" onclick="switchTab('submit-review')"
-                        class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-200 flex items-center justify-center gap-1.5 flex-1 sm:flex-initial cursor-pointer">
-                        <i class="fa-solid fa-paper-plane"></i> Share Review
-                    </button>
-
+            <!-- Slim Horizontal Semester Selector Bar -->
+            <div class="custom-card rounded-2xl p-2.5 sm:p-3 shadow-sm space-y-2">
+                <div class="flex items-center justify-between px-1">
+                    <span
+                        class="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-layer-group text-blue-600"></i> Session:
+                    </span>
+                    <span id="activeSemesterTag"
+                        class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 uppercase">
+                        Current Session
+                    </span>
                 </div>
+                <!-- Horizontal scrollable single-row buttons -->
+                <div id="semesterButtonsContainer"
+                    class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5"></div>
             </div>
-        </div>
 
-        <!-- Tab 1: Finalterm Live View -->
-        <section id="content-final-current" class="tab-content block space-y-6">
-            <div class="custom-card rounded-2xl p-4 shadow-sm relative overflow-hidden space-y-3">
-                <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+            <!-- Search & Copy Bar -->
+            <div class="custom-card rounded-2xl p-3 sm:p-4 shadow-sm relative overflow-hidden space-y-2.5">
+                <div class="flex flex-col sm:flex-row items-center gap-2.5 w-full">
                     <div class="relative flex-1 w-full">
-                        <i
-                            class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400 text-xs"></i>
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
                         <input type="text" id="searchInput" oninput="handleSearch()"
                             placeholder="Search Course Code (e.g. CS101, MTH101)"
-                            class="w-full custom-input rounded-xl py-3 pl-11 pr-4 text-xs font-semibold uppercase placeholder:normal-case shadow-inner">
+                            class="w-full custom-input rounded-xl py-2.5 pl-10 pr-4 text-xs font-semibold uppercase placeholder:normal-case shadow-inner">
                     </div>
                     <button id="copyAllBtn" onclick="copyAllFilteredReviews()"
-                        class="hidden w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-3 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+                        class="hidden w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer">
                         <i class="fa-solid fa-copy text-sm"></i> Copy All Reviews
                     </button>
                 </div>
 
-                <!-- NEW: Dynamic Search Count Banner -->
+                <!-- Dynamic Search Count Banner -->
                 <div id="searchCounterBox"
-                    class="hidden bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-2.5 flex items-center justify-center gap-2 text-xs font-bold text-blue-600">
+                    class="hidden bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-2 flex items-center justify-center gap-2 text-xs font-bold text-blue-600">
                     <i class="fa-solid fa-book text-sm"></i>
                     <span id="searchCounterText">Total papers found for CS101 : 0</span>
                 </div>
             </div>
-            <div id="papersContainer" class="space-y-4"></div>
+
+            <div id="papersContainer" class="space-y-3.5"></div>
         </section>
 
         <!-- Tab 2: Share Review Experience Form -->
         <section id="content-submit-review" class="tab-content hidden">
             <form onsubmit="handleSubmit(event)"
-                class="custom-card rounded-3xl p-6 sm:p-8 space-y-6 shadow-md border-t-4 border-t-blue-600">
+                class="custom-card rounded-3xl p-5 sm:p-8 space-y-5 shadow-md border-t-4 border-t-blue-600">
 
-                <div class="border-b border-slate-200 pb-5 space-y-2">
-                    <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 text-[11px] font-extrabold uppercase tracking-widest border border-blue-500/20">
-                        <i class="fa-solid fa-pen-to-square"></i> Student Portal Review
+                <div class="border-b border-slate-200 pb-4 space-y-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 text-[11px] font-bold uppercase tracking-wider border border-blue-500/20">
+                            <i class="fa-solid fa-pen-to-square"></i> Student Portal Review
+                        </div>
+                        <span id="formTargetSemesterBadge"
+                            class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700 text-[11px] font-bold uppercase tracking-wider border border-emerald-500/20">
+                            Submitting for: Fall 2026 (Mid-Term)
+                        </span>
                     </div>
                     <h2
-                        class="text-xl sm:text-2xl font-black bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent uppercase tracking-tight">
+                        class="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
                         Share Your Exam Experience
                     </h2>
-                    <p class="text-xs sm:text-sm text-slate-600 font-medium">
-                        Apna paper review detail ke sath share karke baki Virtual University students ki madad
-                        karein.
+                    <p class="text-xs sm:text-sm text-slate-600 font-normal">
+                        Apna paper review text mein likhein ya likhe huwe paper ki picture upload karein.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="space-y-1.5">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Your
+                        <label class="text-[11px] font-semibold text-slate-700 uppercase tracking-wider">Your
                             Name <span class="text-red-500">*</span></label>
                         <input type="text" id="formName" required placeholder="Enter your name"
                             class="w-full custom-input rounded-xl p-3 text-xs font-medium">
                     </div>
                     <div class="space-y-1.5">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Course
+                        <label class="text-[11px] font-semibold text-slate-700 uppercase tracking-wider">Course
                             Code <span class="text-red-500">*</span></label>
                         <input type="text" id="formCourse" required placeholder="e.g., CS201"
                             class="w-full custom-input rounded-xl p-3 text-xs font-medium uppercase">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="space-y-1.5">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Exam
+                        <label class="text-[11px] font-semibold text-slate-700 uppercase tracking-wider">Exam
                             Date <span class="text-red-500">*</span></label>
-                        <input type="text" id="formDate" required placeholder="DD-MM-YYYY (e.g., 27-07-2026)"
+                        <input type="text" id="formDate" required placeholder="DD-MM-YYYY (e.g., 07-12-2026)"
                             maxlength="10" oninput="formatDateInput(this)"
                             class="w-full custom-input rounded-xl p-3 text-xs font-medium">
                     </div>
                     <div class="space-y-1.5">
-                        <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Exam
+                        <label class="text-[11px] font-semibold text-slate-700 uppercase tracking-wider">Exam
                             Time <span class="text-red-500">*</span></label>
                         <input type="time" id="formTime" required
                             class="w-full custom-input rounded-xl p-3 text-xs font-medium">
@@ -173,15 +180,50 @@
                 </div>
 
                 <div class="space-y-1.5">
-                    <label class="text-[11px] font-bold text-slate-700 uppercase tracking-wider">Paper
-                        Content <span class="text-red-500">*</span></label>
-                    <textarea id="formContent" rows="5" required
+                    <label class="text-[11px] font-semibold text-slate-700 uppercase tracking-wider">Paper
+                        Content / Notes <span class="text-slate-400 font-normal">(Optional if uploading
+                            image)</span></label>
+                    <textarea id="formContent" rows="4"
                         placeholder="Write paper details, MCQs topics, short questions, long questions..."
                         class="w-full custom-input rounded-xl p-4 text-xs font-medium leading-relaxed"></textarea>
                 </div>
 
+                <!-- NEW: Paper Photo Upload Box -->
+                <div class="space-y-2">
+                    <label
+                        class="text-[11px] font-semibold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-image text-blue-600"></i> Upload Paper Photo <span
+                            class="text-slate-400 font-normal">(Optional - Max 5MB)</span>
+                    </label>
+                    <div
+                        class="border-2 border-dashed border-slate-300 hover:border-blue-500 rounded-2xl p-4 text-center bg-slate-50/70 transition-all">
+                        <input type="file" id="formImage" accept="image/*" onchange="previewSelectedImage(this)"
+                            class="hidden">
+                        <label for="formImage" class="cursor-pointer flex flex-col items-center justify-center gap-1.5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-base">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-700">Click to select paper photo (JPG,
+                                PNG)</span>
+                            <span class="text-[10px] text-slate-400">Agar aapne page par paper likha hai to us ki saaf
+                                tasveer lagayein</span>
+                        </label>
+
+                        <!-- Image Preview Box -->
+                        <div id="imagePreviewWrapper" class="hidden mt-3 relative inline-block">
+                            <img id="imagePreviewEl" src="" alt="Preview"
+                                class="max-h-48 rounded-xl border border-slate-200 shadow-sm mx-auto">
+                            <button type="button" onclick="removeSelectedImage()"
+                                class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs flex items-center justify-center shadow-md cursor-pointer">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit"
-                    class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-extrabold py-3.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 uppercase tracking-widest">
+                    class="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold py-3.5 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 uppercase tracking-wider">
                     <i class="fa-solid fa-paper-plane text-[11px]"></i> Submit Your Paper Review
                 </button>
             </form>
@@ -190,8 +232,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full bg-slate-950 text-white py-8 text-center border-t border-slate-900 mt-12">
-        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+    <footer class="w-full bg-slate-950 text-white py-6 text-center border-t border-slate-900 mt-10">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="text-slate-400 text-xs font-medium text-center sm:text-left">
                 &copy; 2026 <span class="text-slate-200 font-semibold">LGWT Official</span>. Virtual
                 University Student Portal.
@@ -207,8 +249,26 @@
         class="fixed top-5 right-5 bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-lg font-medium text-xs hidden z-50">
     </div>
 
+    <!-- Fullscreen Image Zoom Modal with Download Button -->
+    <div id="imageModal" onclick="closeImageModal()"
+        class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
+            <div class="self-end mb-2 flex items-center gap-2">
+                <button id="modalDownloadBtn" onclick="downloadCurrentModalImage()"
+                    class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-md cursor-pointer">
+                    <i class="fa-solid fa-download"></i> Download Photo
+                </button>
+                <button onclick="closeImageModal()"
+                    class="bg-white/15 hover:bg-white/25 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i> Close
+                </button>
+            </div>
+            <img id="modalFullImage" src="" alt="Full Paper"
+                class="max-h-[82vh] w-auto rounded-2xl shadow-2xl border border-white/10">
+        </div>
+    </div>
+
     <script src="output.js"></script>
-    <script src="./anti-inspect.js"></script>
 </body>
 
 </html>
